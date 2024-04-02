@@ -1,0 +1,187 @@
+//********************************
+//Mariel Daniela Rojas Sánchez   
+//Módulo Lógica Computacional    
+//Proyecto Final                 
+//Juego de memoria
+//Agosto, 2022
+//********************************
+
+
+
+Algoritmo JuegoMemoria
+	
+	//DEFINICION VARIABLES
+	Definir dim,num,jugador1,jugador2,fil, col,cont1,cont2,totalmazo, vector Como Entero
+	Definir posicion,seleccionCartas,difi,longCartas,Mazo,revolMazo,cartaAzar,numEle,numEle1,iniciatur Como Entero
+	Definir bandera1, bandera2 como Logico
+	Definir cartas,nombre Como Caracter
+	
+	//INICIO
+	
+	Escribir ""
+	Escribir " ****************************************************************************************"
+	Escribir "                                ¡JUEGO DE MEMORIA!"
+	Escribir " ****************************************************************************************"
+	Escribir ""
+	Escribir "Digite su Nombre"
+	Leer nombre
+	Escribir "Seleccione la dificultad con la que desea jugar"
+	Escribir ""
+	//Se escoge la dificultad del juego.
+	Escribir " 1-Nivel fácil, con 5 parejas."
+	Escribir " 2-Nivel intermedio, con 9 parejas."
+	Escribir " 3-Nivel difícil, con 13 parejas."
+	Leer difi
+	
+	Segun difi
+		1:  longCartas=5
+			Inicio("Elegiste el nivel fácil","con 5 parejas por descubrir")
+		2:  longCartas=9
+			Inicio("Elegiste el nivel Intermedio","con 9 parejas por descubrir")
+		3:  longCartas=13
+			Inicio("Elegiste el nivel Difícil","con 15 parejas por descubrir")
+		De Otro Modo: Escribir "Número equivocado"
+	FinSegun
+	
+	totalMazo = longCartas*2
+	
+	//DIMENSION MATRICES Y VECTORES
+	dim=13
+	Dimension cartas[dim]
+	Dimension posicion[dim]
+	Dimension seleccionCartas[longCartas] // Se selecciona el limite de cartas que el usuario eligió
+	Dimension Mazo[totalMazo] //Se crea el mazo, donde este se multiplica *2 el nivel seleccionado, si son 5 parejas, seria 5*2, si son 9 parejas serian 9*2
+	Dimension revolMazo[totalMazo] //Se revuelven los vectores para que las cartas nunca tengan el mismo valor y el usuario no sepa como ganar.
+	
+
+	// Los vectores se identifican con letras del abecedario, para escoger las parejas.
+	//Nivel Fácil
+	cartas[0]="USA" ; cartas[1]="MEXICO" ; cartas[2]="CANADA"  ; cartas[3]="COLOMBIA" ; cartas[4]="ITALIA" ;
+	//Nivel Intermedio
+	cartas[5]="RUSIA" ; cartas[6]="FRANCIA" ; cartas[7]="PANAMA"  ; cartas[8]="CHINA" ;
+	//Nivel dificil
+	cartas[9]="IRAN" ; cartas[10]="BRASIL"  ; cartas[11]="SUIZA" ; cartas[12]="JAPON" ;
+
+	// El vectorCartas, es el vector que el usuario elige, si elige 1, la carta será la carta A
+	//Si elige 2 , la carta será la carta B , y así sucesivamente. Luego se revulve todo para que el usuario no se aprenda todo de memoria.
+	
+	//Nivel fácil
+	posicion[0]=1 ; posicion[1]=2 ; posicion[2]=3 ; posicion[3]=4 ; posicion[4]=5;
+	//Nivel Intermedio
+	posicion[5]=6 ; posicion[6]=7 ; posicion[7]=8 ; posicion[8]=9;
+	//Nivel dificil
+	posicion[9]=10 ; posicion[10]=11 ; posicion[11]=12 ; posicion[12]=13 ;
+	
+
+	
+	
+	//INICIO
+	Para fil=0 Hasta longCartas-1
+		seleccionCartas[fil]=posicion[fil] 
+	FinPara
+	
+	//Escribir "["vector[longcartas]"]"
+
+	//El para principal es el que crea el mazo, el mazo se crea duplicando la cantidad de cartas seleccionadas
+	//Ej 0 1 2 3 4   01234  12345 678910     310945
+	//la primera secuencia 01234 representa las posiciones del primer vector y la segunda secuencia representa las posciciones del segundo vector
+	
+	//Luego se llena el vector con los valores de los vectores, que contienen las cartas y el de las posiciones
+	Para fil=0 Hasta (totalMazo) - 1 Hacer
+		Si cont1 > longCartas -1 Entonces
+			cont1=0
+		FinSi
+		Mazo[fil]=seleccionCartas[cont1]
+		cont1 = cont1 + 1		
+	FinPara
+	
+	//Revuelve las cartas posiciones i =  12345678910
+	//El contador 1 da las vueltas externas
+	//El contador 2 da las vueltas internas
+	//Aqui se revuelve el mazo 
+	
+	// Se revuelven las cartas
+	cont1=0
+	Repetir
+		//Crea las cartas aleatorias
+		cartaAzar=Aleatorio(1,totalmazo-1)
+		
+		Repetir
+			//Busca los valores repetidos 
+			Si revolMazo[cont2] = cartaAzar
+				bandera2=Verdadero //Encontró una carta repetida
+				
+			FinSi
+			cont2=cont2+1
+			//cuando se sale por contador significa que no hay cartas repetidas
+		Hasta Que cont2>=totalMazo o bandera2==Verdadero
+		
+		//Guarda en la posicion del primer contador el valor de la carta aleatoria, simpre y cuando flag1 sea flaso o sea no hay números repetidos
+		Si bandera2==Falso Entonces
+			revolMazo[cont1]=cartaAzar
+           Escribir cont1
+		SiNo
+			bandera2=Falso
+		FinSi
+		cont2=0 // este reinicia el contador interno
+		cont1=cont1+1
+	Hasta Que cont1>=totalMazo-1 
+	
+	
+
+	Repetir 
+		Escribir ""
+		
+		iniciaTur = 1 + azar(2)
+		
+		Si iniciaTur = 1
+			Escribir ""
+			Escribir "Es turno del rival"
+			Escribir "Seleccione una carta para voltearla"
+			Leer numEle
+			Escribir "Seleccione otra carta para voltearla"
+			Leer numEle1
+		SiNo
+			Escribir "Es tu turno ", nombre
+			Escribir "Seleccione una carta para voltearla"
+			Leer numEle
+			Escribir "Seleccione una otra carta para voltearla"
+			Leer numEle1
+			
+		FinSi
+		
+		Para fil=1 Hasta totalMazo-1 Hacer
+			//Comparar vector
+			Si fil+1 == numEle o  fil+1 == numEle1  
+				Escribir "[",cartas[posicion[Mazo[revolMazo[fil]]]], "]" Sin Saltar
+				
+			SiNo
+				Escribir "[",fil+1,"]" Sin Saltar
+			FinSi
+		FinPara
+		Escribir ""
+		
+	Hasta Que  fil = longCartas
+	
+FinAlgoritmo
+
+SubProceso Inicio(text1, text2)
+	Definir numLocal Como Entero
+	Escribir text1
+	Borrar Pantalla
+	Escribir ""
+	Escribir ""
+	Escribir text2
+	Repetir
+		Escribir "Presione 1 para iniciar el juego"
+		leer numLocal
+		Si numLocal <> 1 Entonces
+			Escribir "Número incorrecto"
+			
+		FinSi
+	Hasta Que numLocal=1
+	
+	
+
+FinSubProceso
+

@@ -1,0 +1,53 @@
+//Mariel,Daniel y Manfred.
+//Ejercicio8
+//Carton Bingo
+
+Algoritmo Ejercicio8
+	//Declarar variables
+	Definir fil,col,i,num,j,bingo,l Como Entero
+	Definir b,t Como Caracter
+	
+	Dimension Bingo[5,5]
+	Dimension b[6,5]
+	
+	i=0
+	
+	Para fil=0 hasta 4 Hacer 
+		
+		Si  i=0 Entonces
+			j=0 
+			num= 1+azar(15)
+		Sino 
+			Si  i=1 Entonces
+				j=0 
+				num=16 + azar(15)
+			Sino 
+				Si i=2 Entonces
+					j=0 
+					num=31 + azar(15)
+				SiNo
+					Si  i=3 Entonces
+						j=0 
+						num=46 + azar(15)
+					Sino 
+						Si i=4 Entonces
+							j=0 
+							num=61 + azar(15)
+						FinSi
+					FinSi	 
+				FinSi		 
+			FinSi
+		FinSi
+		
+	FinPara	
+	
+	//IMPRIME EL CARTON DE BINGO
+	Para fil=0 Hasta 5 Hacer
+		Escribir"[" bingo[fil,col] "]" Sin Saltar
+//		Para col=0 Hasta 4 Hacer
+//
+//		FinPara
+		Escribir "  "
+	FinPara
+	
+FinAlgoritmo
